@@ -1,9 +1,15 @@
 const { Client, Config, TerminalLocalAPI } = require("@adyen/api-library");
 const dotenv = require('dotenv')
 dotenv.config();
-const { paymentRequest } = require("./requestType/payment.js");
-const { login } = require("./requestType/login.js");
-const { printReceipt } = require("./requestType/printReceipt.js");
+//Terminal requests
+const { 
+    payment, 
+    refund,
+    login, 
+    logout, 
+    printReceipt
+} = require('./requests.js')
+
 
 
 const config = new Config();
@@ -18,20 +24,22 @@ const client = new Client({ config });
 let terminalApi = new TerminalLocalAPI(client);
 
 
-const terminalAPIPaymentRequest = { saleToPOIRequest: paymentRequest };  
-  
+// Paste one of the Terminal requests as the second argument: 
+const terminalAPIPaymentRequest = { saleToPOIRequest: refund };  
+console.log('Request:') 
+console.log(terminalAPIPaymentRequest)
+
 const securityKey = {
     adyenCryptoVersion: 1,
     keyIdentifier: process.env.KEY_IDENTIFIER,
     keyVersion: 1,
     passphrase: process.env.PASSPHRASE
-  };
+};
 
-  
-  console.log(JSON.stringify(terminalAPIPaymentRequest));
-  
-  terminalApi.request(terminalAPIPaymentRequest, securityKey)
+
+terminalApi.request(terminalAPIPaymentRequest, securityKey)
   .then((obj) => {
+    console.log('Response:') 
     console.log("No Error: ", JSON.stringify(obj));
   })
   .catch((err) => {
