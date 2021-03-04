@@ -25,7 +25,7 @@ let terminalApi = new TerminalLocalAPI(client);
 
 
 // Paste one of the Terminal requests as the second argument: 
-const terminalAPIPaymentRequest = { saleToPOIRequest: refund };  
+const terminalAPIPaymentRequest = { saleToPOIRequest: payment };  
 console.log('Request:') 
 console.log(terminalAPIPaymentRequest)
 

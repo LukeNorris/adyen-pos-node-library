@@ -133,7 +133,7 @@ const printReceipt = {
                         characterStyle:"Normal",
                         alignment:"Left",
                         endOfLineFlag:true,
-                        text:"Some explanation about the receipt (# %^& @/: $ Ä) "
+                        text:"Some explanation about the receipt(# %^& @/: $ Ä)"
                     },
                     {
                         color:"White",
@@ -171,5 +171,6 @@ module.exports = {
     printReceipt
  } 
 
-
+//(# %^& @/: $ Ä)  
+//(‰ƒˆ÷¸‹ﬂ)
 
