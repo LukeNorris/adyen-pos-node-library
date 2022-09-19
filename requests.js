@@ -22,10 +22,12 @@ const payment = {
           currency: "EUR",
           requestedAmount: parseFloat((Math.random() * (40)).toFixed(2)) // random amount
         }
-      }  
+      }
     }
-    
+
   };
+
+
 
 
 
@@ -43,14 +45,13 @@ const refund = {
     reversalRequest:{
         originalPOITransaction:{
             pOITransactionID:{
-               transactionID:"8424683", //get id from origimal transaction 
-               timeStamp:"2021-03-03T19:48:42.092Z", //get timestamp of original transaction 
+               transactionID:"8UTk001614871084004.863614871094304H", //get id from origimal transaction
+               timeStamp:"2021-03-04T15:18:04.000Z", //get timestamp of original transaction
             },
         },
         reversalReason:"MerchantCancel"
     }
 }
-
 
 
 
@@ -65,20 +66,20 @@ const login = {
         serviceID: Math.floor(Math.random() * Math.floor(10000000)).toString(),
         messageCategory: "Login"
     },
-    loginRequest:{  
+    loginRequest:{
         dateTime:new Date().toISOString(),
-        saleSoftware:{  
+        saleSoftware:{
             manufacturerID:"Adyen",
             applicationName:"TEST APP",
             softwareVersion:"1.0",
             certificationCode:""
         },
-        saleTerminalData:{  
+        saleTerminalData:{
             totalsGroupID:"GroupA"
         },
         operatorLanguage:"en",
         operatorID:"Luke"
-    } 
+    }
 };
 
 
@@ -95,7 +96,7 @@ const logout = {
         messageCategory: "Logout"
     },
     logoutRequest:{
-  
+
     }
 };
 
@@ -111,7 +112,7 @@ const printReceipt = {
         protocolVersion:"3.0",
         saleID:"DemoCashRegisterID",
         serviceID: Math.floor(Math.random() * Math.floor(10000000)).toString(),
-        messageCategory:"Print",    
+        messageCategory:"Print",
     },
     printRequest:{
         printOutput:{
@@ -133,7 +134,7 @@ const printReceipt = {
                         characterStyle:"Normal",
                         alignment:"Left",
                         endOfLineFlag:true,
-                        text:"Some explanation about the receipt(# %^& @/: $ Ä)"
+                        text:"Some explanation about the receipt(# %^& @/: $ Äöäü)"
                     },
                     {
                         color:"White",
@@ -163,14 +164,119 @@ const printReceipt = {
 }
 
 
+//*********** Split Payment with tipping ***********
+const splitPayment = {
+  messageHeader: {
+      protocolVersion:"3.0",
+      messageClass:"Service",
+      messageCategory:"Payment",
+      messageType:"Request",
+      saleID:"DemoCashRegisterID",
+      serviceID: Math.floor(Math.random() * Math.floor(10000000)).toString(),
+      pOIID:"V400cPlus-402023788"
+    },
+    paymentRequest: {
+      saleData: {
+        saleTransactionID: {
+          transactionID: "9820s",
+          timeStamp: new Date().toISOString()
+        },
+       saleToAcquirerData: "tenderOption=RecieptHandler&tenderOption=AskGratuity",
+       saleReferenceID: "saleReferenceID"
+
+      },
+      paymentTransaction: {
+        amountsReq: {
+          currency: "EUR",
+          requestedAmount: 15,
+          paidAmount: 0
+        }
+      },
+      paymentData: {
+        paymentType: "Normal",
+        splitPaymentFlag: true
+      }
+  }
+}
+
+
+const cardAcquisition = {
+        messageHeader: {
+            protocolVersion:"3.0",
+            messageClass:"Service",
+            messageCategory:"CardAcquisition",
+            messageType:"Request",
+            saleID:"DemoCashRegisterID",
+            serviceID: Math.floor(Math.random() * Math.floor(10000000)).toString(),
+            pOIID:"V400cPlus-402023788"
+          },
+        cardAcquisitionRequest: {
+            saleData: {
+                saleTransactionID: {
+                    transactionID: "card-acquistion-test",
+                    timeStamp: "2021-04-07T19:30:03.000Z"
+                },
+                tokenRequestedType:"Customer"
+            },
+            cardAcquisitionTransaction: {
+                totalAmount: 10
+            }
+      }
+}
+
+
+    const cardAcquisitionPayment = {
+        messageHeader: {
+            protocolVersion:"3.0",
+            messageClass:"Service",
+            messageCategory:"Payment",
+            messageType:"Request",
+            saleID:"DemoCashRegisterID",
+            serviceID: Math.floor(Math.random() * Math.floor(10000000)).toString(),
+            pOIID:"V400cPlus-402023788"
+          },
+        paymentRequest: {
+            saleData: {
+                saleTransactionID: {
+                    transactionID: "card-acquistion-test",
+                    timeStamp: new Date().toISOString(),
+                },
+                saleToAcquirerData:"shopperEmail=S.email@example.com&shopperReference=" + Math.floor(Math.random() * Math.floor(10000000)).toString() + "_reference",
+                tokenRequestedType:"Customer"
+            },
+            paymentTransaction: {
+                amountsReq: {
+                    currency: "EUR",
+                    requestedAmount: 10
+                }
+            },
+            paymentData: {
+                cardAcquisitionReference: {
+                    timeStamp: "2021-04-07T19:30:03.000Z",
+                    transactionID: "card-acquistion-test"
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
 module.exports = {
     payment,
     refund,
     login,
     logout,
-    printReceipt
- } 
+    printReceipt,
+    splitPayment,
+    cardAcquisition,
+    cardAcquisitionPayment
+ }
 
-//(# %^& @/: $ Ä)  
+//(# %^& @/: $ Ä)
 //(‰ƒˆ÷¸‹ﬂ)
-
