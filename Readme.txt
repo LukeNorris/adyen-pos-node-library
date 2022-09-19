@@ -11,6 +11,8 @@ PASSPHRASE= --Your password from Adyen Customer Area--
 API_KEY= --Your API key--
 TERMINAL_API_LOCAL_ENDPOINT=https:// --Your terminal IP address-- :8443/nexo--
 
+Ensure both terminal and computer are on the same wifi network
+
 In index.js file paste the API call variable as second argument in the terminalApi.request
 
 Run the file: node index.js
